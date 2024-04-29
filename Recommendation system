@@ -1,0 +1,41 @@
+user_ratings = {
+    'User1': {'Movie1': 5, 'Movie2': 4, 'Movie3': 3, 'Movie4': 2},
+    'User2': {'Movie1': 4, 'Movie2': 3, 'Movie3': 2, 'Movie4': 1},
+    'User3': {'Movie1': 3, 'Movie2': 2, 'Movie3': 4, 'Movie4': 5},
+    'User4': {'Movie1': 2, 'Movie2': 1, 'Movie3': 5, 'Movie4': 4}
+}
+
+def calculate_similarity(user1_ratings, user2_ratings):
+    common_movies = set(user1_ratings.keys()) & set(user2_ratings.keys())
+    if len(common_movies) == 0:
+        return 0  # No common movies, similarity is 0
+    sum_of_squares = sum((user1_ratings[movie] - user2_ratings[movie]) ** 2 for movie in common_movies)
+    return 1 / (1 + sum_of_squares)  # Similarity score between 0 and 1
+
+ def get_recommendations(target_user, user_ratings):
+    similar_users = []
+    for user, ratings in user_ratings.items():
+        if user != target_user:
+            similarity = calculate_similarity(user_ratings[target_user], ratings)
+            similar_users.append((user, similarity))
+    similar_users.sort(key=lambda x: x[1], reverse=True)  # Sort by similarity in descending order
+    recommendations = []
+    for movie in user_ratings[target_user]:
+        if user_ratings[target_user][movie] < 3:  # Only recommend movies the user hasn't rated highly
+            for user, similarity in similar_users:
+                if movie in user_ratings[user] and user_ratings[user][movie] >= 3:
+                    recommendations.append((movie, user_ratings[user][movie] * similarity))
+                    break
+    recommendations.sort(key=lambda x: x[1], reverse=True)  # Sort by weighted rating in descending order
+    return [movie for movie, _ in recommendations]
+            
+target_user = 'User1'
+recommendations = get_recommendations(target_user, user_ratings)
+print("Recommendations for", target_user + ":")
+for movie in recommendations:
+    print(movie)
+
+            
+
+
+            
