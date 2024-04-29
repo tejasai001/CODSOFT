@@ -1,1 +1,28 @@
+def simple_chatbot(user_input):
+    if "hello" in user_input.lower() or "hi" in user_input.lower():
+        return "Hello! what can I do for you?"
+    elif "help" in user_input.lower():
+        return "Sure, I can help. What should I assistance for you?"
+    elif "time" in user_input.lower():
+        return "I'm sorry, I couldn't access the time information."
+    elif "thank you" in user_input.lower() or "thanks" in user_input.lower():
+        return "You're welcome! If you need anything else, I can assist you with that."
+    else:
+        return "I'm sorry, I didn't understand that. Can you please repeat it or ask anything else?"
 
+
+user_input = input("You: ")
+response = simple_chatbot(user_input)
+print("Bot:", response)
+user_input = input("You: ")
+response = simple_chatbot(user_input)
+print("Bot:", response)
+user_input = input("You: ")
+response = simple_chatbot(user_input)
+print("Bot:", response)
+user_input = input("You: ")
+response = simple_chatbot(user_input)
+print("Bot:", response)
+user_input = input("You: ")
+response = simple_chatbot(user_input)
+print("Bot:", response)
